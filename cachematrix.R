@@ -49,23 +49,25 @@ cacheSolve <- function(x=matrix(), ...) {
 
 CheckCache=function(i_matrix)
 {
-  for i in (1:3) # test the cashe in 3 attempts
-    {
-       if (i==1)
-        {   
-	message("Before Cache")
-	temp = makeCacheMatrix(i_matrix)
+  for ( i in 1:3) # test the cashe in 3 attempts
+  {
+    if (i==1)
+    {   
+      message("Before Cache")
+      temp = makeCacheMatrix(i_matrix)
+    }
       else
-           message("After Cache" + i + " attempt") 
-	}
-	PrevTime = Sys.time()  
-	cacheSolve(temp)
-	duration= Sys.time() - PrevTime
-	print(duration)
-      }
-   }
+      {
+        message(sprintf("After Cache, attempt: %s", i-1))
+       }
+    PrevTime = Sys.time()  
+    cacheSolve(temp)
+    duration= Sys.time() - PrevTime
+    print(duration)
+  }
+}
  
  set.seed(2250000) # to generate consistent numbers in successive attempts
- r=rnorm(2250000)
+ r=rnorm(2250000)  # to generate random number to fill 1500 X 1500 matrix
  m1=matrix(r,nrow=1500, ncol= 1500)
  CheckCache(m1)
