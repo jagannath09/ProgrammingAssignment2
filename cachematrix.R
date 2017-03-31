@@ -1,15 +1,77 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Caching the Inverse of a Matrix
+## This function creates a special "matrix" object that can cache its inverse
 
-## Write a short comment describing this function
+## This function is intended to perform the followng 4 sub functions.
+## set the value of the matrix
+## get the value of the matrix
+## set the inverse of matrix
+## get the inverse of matrix
 
 makeCacheMatrix <- function(x = matrix()) {
+             inv <- NULL
+             set <- function(y) {
+             
+                     x <<- y
+                     inv <<- NULL
+             }
+             get <- function() x
+             setInverse <- function(inverse) inv <<- inverse
+             getInverse <- function() inv
+             list(set = set
+                , get = get
+                , setInverse = setInverse
+                , getInverse = getInverse
+                 )
+}
 
+## This function computes the inverse of the special "matrix" returned by 
+## makeCacheMatrix above. If the inverse has already been calculated 
+## (and the matrix has not changed), then the cachesolve should retrieve the inverse from the cache.
+
+## x: reference of makeCacheMatrix()
+## return: inverse of the original matrix input to makeCacheMatrix()
+        
+cacheSolve <- function(x=matrix(), ...) {             
+            ## Return a matrix that is the inverse of 'x'
+              inv <- x$getInverse()
+		if(!is.null(inv)) {
+			message("getting cached data")
+			return(inv)
+		}
+		# else calculate the inverse
+    message("calculate inverse")
+		data <- x$get()
+		inv <- solve(data, ...)
+		x$setInverse(inv)
+    return(inv)
 }
 
 
-## Write a short comment describing this function
+CheckCache=function(i_matrix) {
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-}
+	message("Before Cache")
+	temp = makeCacheMatrix(i_matrix)
+	PrevTime = Sys.time()  
+	cacheSolve(temp)
+	duration= Sys.time() - PrevTime
+	print(duration)
+  
+	message("After Cache - 1st Attempt")
+	#temp = makeCacheMatrix(i_matrix)
+	PrevTime = Sys.time()  
+	cacheSolve(temp)
+	duration= Sys.time() - PrevTime
+	print(duration)
+	
+        message("After Cache - 2nd Attempt")    
+        #temp = makeCacheMatrix(i_matrix)
+        PrevTime = Sys.time()  
+        cacheSolve(temp)
+        duration= Sys.time() - PrevTime
+        print(duration)
+ }
+ 
+ set.seed(2250000) # to generate consistent numbers in successive attempts
+ r=rnorm(2250000)
+ m1=matrix(r,nrow=1500, ncol= 1500)
+ CheckCache(m1)
