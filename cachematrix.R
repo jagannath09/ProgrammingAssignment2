@@ -47,29 +47,23 @@ cacheSolve <- function(x=matrix(), ...) {
 }
 
 
-CheckCache=function(i_matrix) {
-
+CheckCache=function(i_matrix)
+{
+  for i in (1:3)
+    {
+       if (i==1)
+        {   
 	message("Before Cache")
 	temp = makeCacheMatrix(i_matrix)
+      else
+           message("After Cache" + i + " attempt") 
+	}
 	PrevTime = Sys.time()  
 	cacheSolve(temp)
 	duration= Sys.time() - PrevTime
 	print(duration)
-  
-	message("After Cache - 1st Attempt")
-	#temp = makeCacheMatrix(i_matrix)
-	PrevTime = Sys.time()  
-	cacheSolve(temp)
-	duration= Sys.time() - PrevTime
-	print(duration)
-	
-        message("After Cache - 2nd Attempt")    
-        #temp = makeCacheMatrix(i_matrix)
-        PrevTime = Sys.time()  
-        cacheSolve(temp)
-        duration= Sys.time() - PrevTime
-        print(duration)
- }
+      }
+   }
  
  set.seed(2250000) # to generate consistent numbers in successive attempts
  r=rnorm(2250000)
