@@ -49,7 +49,7 @@ cacheSolve <- function(x=matrix(), ...) {
 
 CheckCache=function(i_matrix)
 {
-  for i in (1:3)
+  for i in (1:3) # test the cashe in 3 attempts
     {
        if (i==1)
         {   
